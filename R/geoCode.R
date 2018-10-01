@@ -17,7 +17,7 @@ latlon <- function(address, apiKey){
 
   return(c(X,Y))
 }
-latlon("1600 Amphitheatre ,@ # . Parkway, Mountain View, CA")
+
 
 reverselatlon<- function(lat, lon, apiKey){
 
