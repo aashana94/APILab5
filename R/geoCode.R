@@ -1,16 +1,14 @@
 library(httr)
 library(jsonlite)
 
-latlon <- function(x){
+latlon <- function(address, apiKey){
 
-  param <- gsub("[\\@\\#\\%\\&\\!\\(\\)\\_\\*\\+\\;\\^]", "", x)
-  print(param)
+  param <- gsub("[\\@\\#\\%\\&\\!\\(\\)\\_\\*\\+\\;\\^]", "", address)
   params <- trimws(gsub("\\s+","+", param))
-  print(params)
-  base <- "https://maps.googleapis.com/maps/api/geocode/json?address="
-  geoKey <-"&key=AIzaSyAm1Nenb9QOGTKES6uXOpSwQ-dDdOuXha8"
 
-  urlAPI <- paste0(base,params,geoKey)
+  base <- "https://maps.googleapis.com/maps/api/geocode/json?address="
+  
+  urlAPI <- paste0(base,params,"&key=",apiKey)
   callAPI <- GET(urlAPI)
   content(callAPI)
   resultJSON <- fromJSON(txt = callAPI$url)
@@ -20,3 +18,17 @@ latlon <- function(x){
   return(c(X,Y))
 }
 latlon("1600 Amphitheatre ,@ # . Parkway, Mountain View, CA")
+
+reverselatlon<- function(lat, lon, apiKey){
+
+  params <- paste0(lat,",",lon)
+  base <- "https://maps.googleapis.com/maps/api/geocode/json?latlng="
+  
+  urlAPI <- paste0(base,params,"&key=",apiKey)
+  callAPI <- GET(urlAPI)
+  content(callAPI)
+  resultJSON <- fromJSON(txt = callAPI$url)
+  address <- resultJSON$results$formatted_address
+  
+  return(address)
+}
