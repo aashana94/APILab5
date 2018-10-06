@@ -1,5 +1,5 @@
 ---
-title: "GeoCode and Reverse GeoCode API in Shiny"
+title: "GeoCode and Reverse GeoCode API"
 author: "Aashana, Jasleen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,6 +16,55 @@ knitr::opts_chunk$set(
 )
 ```
 
-GeoCode and Reverse GeoCode API in Shiny
+# GeoCode and Reverse GeoCode API 
 
+
+## Overview
+
+This package has a geoCode.R file which has two functions. Named latlon and reverselatlon.
+
+* latlon
+
+This function calls the google geocode API https://developers.google.com/maps/documentation/geocoding/start 
+
+To run this you need get your own API key from google, which can be taken form the link above. The functions needs two arguments address and apikey. and returns lat and long of the address in a Vector.
+
+```{r}
+latlon <- function(address, apiKey){
+
+  param <- gsub("[\\@\\#\\%\\&\\!\\(\\)\\_\\*\\+\\;\\^]", "", address)
+  params <- trimws(gsub("\\s+","+", param))
+
+  base <- "https://maps.googleapis.com/maps/api/geocode/json?address="
+  
+  urlAPI <- paste0(base,params,"&key=",apiKey)
+  callAPI <- GET(urlAPI)
+  content(callAPI)
+  resultJSON <- fromJSON(txt = callAPI$url)
+  X <- resultJSON$results$geometry$location$lng
+  Y <- resultJSON$results$geometry$location$lat
+
+  return(c(X,Y))
+}
+```
+
+* reverselatlon
+
+This function also call google geocode but reverse geocode this function needs three arguments. The lat, long, and apikey. It returns the address of the given lat long. 
+
+```{r}
+reverselatlon<- function(lat, lon, apiKey){
+
+  params <- paste0(lat,",",lon)
+  base <- "https://maps.googleapis.com/maps/api/geocode/json?latlng="
+  
+  urlAPI <- paste0(base,params,"&key=",apiKey)
+  callAPI <- GET(urlAPI)
+  content(callAPI)
+  resultJSON <- fromJSON(txt = callAPI$url)
+  address <- resultJSON$results$formatted_address
+  
+  return(address)
+}
+```
 
