@@ -12,12 +12,50 @@
 
 <meta name="author" content="Aashana, Jasleen" />
 
-<meta name="date" content="2018-10-02" />
+<meta name="date" content="2018-10-06" />
 
-<title>GeoCode and Reverse GeoCode API in Shiny</title>
+<title>GeoCode and Reverse GeoCode API</title>
 
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 
 
@@ -30,13 +68,57 @@
 
 
 
-<h1 class="title toc-ignore">GeoCode and Reverse GeoCode API in Shiny</h1>
+<h1 class="title toc-ignore">GeoCode and Reverse GeoCode API</h1>
 <h4 class="author"><em>Aashana, Jasleen</em></h4>
-<h4 class="date"><em>2018-10-02</em></h4>
+<h4 class="date"><em>2018-10-06</em></h4>
 
 
 
-<p>GeoCode and Reverse GeoCode API in Shiny</p>
+<div id="geocode-and-reverse-geocode-api" class="section level1">
+<h1>GeoCode and Reverse GeoCode API</h1>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>This package has a geoCode.R file which has two functions. Named latlon and reverselatlon.</p>
+<ul>
+<li>latlon</li>
+</ul>
+<p>This function calls the google geocode API <a href="https://developers.google.com/maps/documentation/geocoding/start" class="uri">https://developers.google.com/maps/documentation/geocoding/start</a></p>
+<p>To run this you need get your own API key from google, which can be taken form the link above. The functions needs two arguments address and apikey. and returns lat and long of the address in a Vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">latlon &lt;-<span class="st"> </span><span class="cf">function</span>(address, apiKey){
+
+  param &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;[</span><span class="ch">\\</span><span class="st">@</span><span class="ch">\\</span><span class="st">#</span><span class="ch">\\</span><span class="st">%</span><span class="ch">\\</span><span class="st">&amp;</span><span class="ch">\\</span><span class="st">!</span><span class="ch">\\</span><span class="st">(</span><span class="ch">\\</span><span class="st">)</span><span class="ch">\\</span><span class="st">_</span><span class="ch">\\</span><span class="st">*</span><span class="ch">\\</span><span class="st">+</span><span class="ch">\\</span><span class="st">;</span><span class="ch">\\</span><span class="st">^]&quot;</span>, <span class="st">&quot;&quot;</span>, address)
+  params &lt;-<span class="st"> </span><span class="kw">trimws</span>(<span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">s+&quot;</span>,<span class="st">&quot;+&quot;</span>, param))
+
+  base &lt;-<span class="st"> &quot;https://maps.googleapis.com/maps/api/geocode/json?address=&quot;</span>
+  
+  urlAPI &lt;-<span class="st"> </span><span class="kw">paste0</span>(base,params,<span class="st">&quot;&amp;key=&quot;</span>,apiKey)
+  callAPI &lt;-<span class="st"> </span><span class="kw">GET</span>(urlAPI)
+  <span class="kw">content</span>(callAPI)
+  resultJSON &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(<span class="dt">txt =</span> callAPI<span class="op">$</span>url)
+  X &lt;-<span class="st"> </span>resultJSON<span class="op">$</span>results<span class="op">$</span>geometry<span class="op">$</span>location<span class="op">$</span>lng
+  Y &lt;-<span class="st"> </span>resultJSON<span class="op">$</span>results<span class="op">$</span>geometry<span class="op">$</span>location<span class="op">$</span>lat
+
+  <span class="kw">return</span>(<span class="kw">c</span>(X,Y))
+}</code></pre></div>
+<ul>
+<li>reverselatlon</li>
+</ul>
+<p>This function also call google geocode but reverse geocode this function needs three arguments. The lat, long, and apikey. It returns the address of the given lat long.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reverselatlon&lt;-<span class="st"> </span><span class="cf">function</span>(lat, lon, apiKey){
+
+  params &lt;-<span class="st"> </span><span class="kw">paste0</span>(lat,<span class="st">&quot;,&quot;</span>,lon)
+  base &lt;-<span class="st"> &quot;https://maps.googleapis.com/maps/api/geocode/json?latlng=&quot;</span>
+  
+  urlAPI &lt;-<span class="st"> </span><span class="kw">paste0</span>(base,params,<span class="st">&quot;&amp;key=&quot;</span>,apiKey)
+  callAPI &lt;-<span class="st"> </span><span class="kw">GET</span>(urlAPI)
+  <span class="kw">content</span>(callAPI)
+  resultJSON &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(<span class="dt">txt =</span> callAPI<span class="op">$</span>url)
+  address &lt;-<span class="st"> </span>resultJSON<span class="op">$</span>results<span class="op">$</span>formatted_address
+  
+  <span class="kw">return</span>(address)
+}</code></pre></div>
+</div>
+</div>
 
 
 
