@@ -1,5 +1,7 @@
 #' Making a linear regression function using S3 class
-#' @importFrom httr jsonlite GET fromJSON content
+#' @importFrom httr GET content
+#' @importFrom jsonlite fromJSON
+#'
 #' @param address as vector
 #' @param apikey as character
 #'

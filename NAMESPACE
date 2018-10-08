@@ -3,5 +3,4 @@
 export(latlon)
 importFrom(httr,GET)
 importFrom(httr,content)
-importFrom(httr,fromJSON)
-importFrom(httr,jsonlite)
+importFrom(jsonlite,fromJSON)
