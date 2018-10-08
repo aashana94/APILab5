@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/aashana94/APILab5.svg?branch=master)](https://travis-ci.org/aashana94/APILab5)
-
 LiUAdRLab5
 ================
 [![Build Status](https://travis-ci.org/aashana94/APILab5.svg?branch=master)](https://travis-ci.org/aashana94/APILab5) 
