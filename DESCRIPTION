@@ -13,3 +13,5 @@ Imports: httr,jsonlite
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
+Imports: httr,
+  jsonlite
