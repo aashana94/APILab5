@@ -3,7 +3,7 @@
 #' @importFrom jsonlite fromJSON
 #'
 #' @param address as vector
-#' @param apikey as character
+#' @param apiKey as character
 #'
 #' @return vector
 #' @export
@@ -32,7 +32,7 @@ latlon(address = "New Delhi, India", apiKey = "randomenumbersandletters")
 #'
 #' @param lat as number
 #' @param lon as number
-#' @param apikey as character
+#' @param apiKey as character
 #'
 #' @return character
 #' @export

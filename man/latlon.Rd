@@ -9,7 +9,7 @@ latlon(address, apiKey)
 \arguments{
 \item{address}{as vector}
 
-\item{apikey}{as character}
+\item{apiKey}{as character}
 }
 \value{
 vector

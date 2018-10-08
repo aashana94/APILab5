@@ -11,7 +11,7 @@ reverselatlon(lat, lon, apiKey)
 
 \item{lon}{as number}
 
-\item{apikey}{as character}
+\item{apiKey}{as character}
 }
 \value{
 character
