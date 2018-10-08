@@ -2,7 +2,7 @@
 % Please edit documentation in R/geoCode.R
 \name{latlon}
 \alias{latlon}
-\title{Making a linear regression function using S3 class}
+\title{Function to make api call using Google apis and return latitude, longitude for provided address}
 \usage{
 latlon(address, apiKey)
 }
@@ -15,7 +15,7 @@ latlon(address, apiKey)
 vector
 }
 \description{
-Making a linear regression function using S3 class
+Function to make api call using Google apis and return latitude, longitude for provided address
 }
 \examples{
 latlon(address = "New Delhi, India", apiKey = "randomenumbersandletters")

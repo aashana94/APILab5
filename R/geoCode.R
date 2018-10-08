@@ -1,4 +1,4 @@
-#' Making a linear regression function using S3 class
+#' Function to make api call using Google apis and return latitude, longitude for provided address
 #' @importFrom httr GET content
 #' @importFrom jsonlite fromJSON
 #'
@@ -26,6 +26,16 @@ latlon <- function(address, apiKey){
 }
 latlon(address = "New Delhi, India", apiKey = "randomenumbersandletters")
 
+#' Function to make api call using Google apis and adress for provided latitude, longitude values
+#' @importFrom httr GET content
+#' @importFrom jsonlite fromJSON
+#'
+#' @param lat as number
+#' @param lon as number
+#' @param apikey as character
+#'
+#' @return character
+#' @export
 reverselatlon<- function(lat, lon, apiKey){
 
   params <- paste0(lat,",",lon)
