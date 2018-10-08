@@ -2,7 +2,7 @@ Package: APILab5
 Type: Package
 Title: GeoCode and Reverse GeoCode using Google API
 Version: 0.1.0
-Author: Aashana, Jasleen
+Author: Aashana(aasni448), Jasleen(jasma846)
 Maintainer: The package maintainer <aashananijhawan@gmail.com>
 Description: Uses google API to geocode the location you want. It returns the lat and long of the place you want.
 License: Apache License
